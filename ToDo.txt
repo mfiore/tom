@@ -1,0 +1,120 @@
+Menu:
+
+-journal	libro
+	-story so far
+	-quest log
+
+-characters			
+	-personaggi
+	-npc
+	-bestiario
+
+-log del mondo	
+	
+-schede					faccia	
+	-caratteristiche
+	-equip
+	-abilità
+
+-inventario storia  	borsa
+-abilità	storia
+
+-mappa	mappa
+	-locale
+	-ambiente
+
+-salvataggio		icona disco
+
+uscire 				icona x
+
+
+
+Base_Type:
+
+Statistics:
+	melee_hit_base
+	ranged_hit_base
+
+	melee_damage_base
+	magic_damage_base
+
+	physical_dodge_base				if enemy.can_hit?
+	mental_dodge_base
+
+	physical_st_base
+	mental_st_base
+	
+	mental_dc_base
+	physical_dc_base
+
+	resistences__base
+
+
+Class<Base_Type
+AbilitiesTree:
+	
+	target
+	roll:
+		-self
+		-other
+	effects
+		durata: n turni o 0, istantanea
+		start function
+		end function		
+	damage
+		types
+		piercing[type]?
+	isChosen?
+
+
+Character<Class:
+	Statistics
+
+	melee_hit_actual=melee_hit_base+equip
+
+Equipment:
+
+conditions
+
+
+Equipment:
+name
+type
+adjust_stat (per ogni stat)
+abilities[]
+effects[]
+
+
+
+Enemy<Base_Type
+
+
+
+
+tipi di abilità:
+- abilità istantanee:
+	-fai x danni a qualcuno
+	-cura x punti feriti a qualcuno
+	implementazione: funzione dell'abilità che prende il target, fa i tiri e applica i risultati
+- abilità che mette un'effetto\condizione per tot turni
+	-5 pf temporanei per 3 turni
+	+2 a colpire per 2 turni
+	+1 in ac per 5 turni
+	implementazione: funzione start aggiunge il bonus
+					 funzione end	sottrae il bonus
+- abilità che da un bonus contro un preciso bersaglio
+	- +1 in ca contro un nemico specifico
+	- +1 a colpire contro un nemico specifico
+	-implementazione: registra il nemico nella funzione start
+					  controlla la condizione ogni attacco e in caso applica il bonus
+
+
+quando si chiama start di un'abilità questa viene messe tra le abilità attive. Ogni mossa si controlla se una di queste abilità può agire.
+Un'alternativa è dividere le abilità in tipologie (e.g. controllo inizio turno, controllo ogni mossa, controllo fine turno.)
+Alternativa è controllare solo negli attacchi e a inizio turno.
+
+
+
+
+
+
